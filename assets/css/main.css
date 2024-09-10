@@ -6,7 +6,7 @@
 }
 
 body {
-  font-family: Poppins;
+  font-family: "Poppins", sans-serif;
   background-color: #f6f8fa;
   color: #333;
 }
@@ -69,4 +69,4 @@ button {
   display: flex;
   justify-content: flex-start;
   margin-top: 5px;
-}/*# sourceMappingURL=main.css.map */
+} /*# sourceMappingURL=main.css.map */
