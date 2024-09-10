@@ -1,0 +1,101 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+// Variables
+$footer-background: #f6f8fa;
+$aktiv-color: #1a4d2e;
+$primary-color: #5ece7b;
+$footer-header: #8c9baa;
+$button-bg: $primary-color;
+$button-hover-bg: $aktiv-color;
+$product-bg: white;
+$product-border: #ddd;
+$product-shadow: rgba(0, 0, 0, 0.1);
+
+// General Reset
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+// Set body background and font
+body {
+  font-family: Poppins;
+  background-color: $footer-background;
+  color: #333;
+}
+
+// Style the category buttons
+button {
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+// Flexbox for the button container
+#app > div {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+// Products container
+.products {
+  width: 100%;
+  padding: 0 15px;
+  display: flex;
+
+  > div:first-of-type {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  // Product Card Style
+  figure {
+    background-color: $product-bg;
+    border: 1px solid $product-border;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 1rem;
+    max-width: 300px;
+    box-shadow: 0 4px 8px $product-shadow;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+
+    // Image Style
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    // Product Title
+    figcaption {
+      h3 {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        margin: 0.4rem 0;
+      }
+    }
+  }
+}
+
+// Ensure the star ratings align well
+.rating {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 5px;
+}
