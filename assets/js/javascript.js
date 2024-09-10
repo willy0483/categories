@@ -59,16 +59,18 @@ function displayProducts(url) {
 
       // Loop through each product
       data.products.forEach((categoriesProducts) => {
-        const starsHtml = createStars(categoriesProducts.rating); // Get star rating HTML
-
         // Generate HTML for each product
         myHtml += `
           <figure>
-            <img src="${categoriesProducts.thumbnail}" alt="${categoriesProducts.title}">
+            <img src="${categoriesProducts.thumbnail}" alt="${
+          categoriesProducts.title
+        }">
             <figcaption>
               <h3>${categoriesProducts.title}</h3>
               <p>${categoriesProducts.price} $</p>
-              <div class="rating">${starsHtml}</div>
+              <div class="rating">${createStars(
+                categoriesProducts.rating
+              )}</div>
             </figcaption>
           </figure>
         `;
