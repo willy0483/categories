@@ -1,87 +1,179 @@
-let url = "https://dummyjson.com/products/categories"; // API URL
 let categories = []; // Store categories
+let mainCategories = {
+  Beauty: [],
+  Fashion: [],
+  Electronics: [],
+  Home: [],
+  Sports: [],
+};
 
 let myApp = document.getElementById("app");
 
 let productsDiv = document.createElement("div"); // Div for displaying products
 let productsContainer = document.createElement("div");
 
-getData(url); // Fetch data
+getData(); // Fetch data
 
-// Fetch data from URL
-function getData(url) {
-  fetch(url)
+// Fetch data from the new category list API
+function getData() {
+  fetch("https://dummyjson.com/products/category-list")
     .then((response) => {
       if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
       return response.json();
     })
     .then((data) => {
+      console.log("Fetched data:", data); // Log fetched data
       categories = data;
-      createButton(data); // Create buttons for categories
+      sortCategories(data); // Sort categories
     })
     .catch((error) => console.error(error));
 }
 
-// Create category buttons
-function createButton(data) {
-  if (Array.isArray(data)) {
-    let buttonDiv = document.createElement("section");
-    myApp.appendChild(buttonDiv);
+// Sort categories into main and subcategories
+function sortCategories(data) {
+  data.forEach((category) => {
+    switch (category) {
+      case "beauty":
+      case "fragrances":
+      case "skin-care":
+        mainCategories.Beauty.push(category);
+        break;
+      case "tops":
+      case "womens-dresses":
+      case "womens-shoes":
+      case "mens-shirts":
+      case "mens-shoes":
+      case "mens-watches":
+      case "womens-watches":
+      case "womens-bags":
+      case "womens-jewellery":
+      case "sunglasses":
+        mainCategories.Fashion.push(category);
+        break;
+      case "smartphones":
+      case "laptops":
+      case "tablets":
+      case "mobile-accessories":
+        mainCategories.Electronics.push(category);
+        break;
+      case "furniture":
+      case "home-decoration":
+      case "groceries":
+      case "kitchen-accessories":
+        mainCategories.Home.push(category);
+        break;
+      case "sports-accessories":
+      case "motorcycle":
+      case "vehicle":
+        mainCategories.Sports.push(category);
+        break;
+      default:
+        console.log(`Unknown category: ${category}`);
+        break;
+    }
+  });
 
-    let myHtml = "";
-    data.forEach((category, index) => {
-      myHtml += `<button onclick="categoryButtonCallBack(${index})" >${category.name}</button>`;
-    });
-    buttonDiv.innerHTML = myHtml;
+  createButton(mainCategories); // Create buttons for categories
+}
+
+// Create category buttons and subcategories
+function createButton(data) {
+  let buttonDiv = document.createElement("section");
+  myApp.appendChild(buttonDiv);
+
+  let myHtml = "";
+
+  for (let mainCategory in data) {
+    myHtml += `
+      <div class="category-wrapper">
+        <button class="category-button" data-category="${mainCategory}">
+          ${mainCategory}
+        </button>
+        <div class="subcategories" id="${mainCategory}-subcategories">
+          ${data[mainCategory]
+            .map(
+              (sub) =>
+                `<div class="subcategory" onclick="handleSubcategoryClick('${sub}')">${sub}</div>`
+            )
+            .join("")}
+        </div>
+      </div>`;
+  }
+
+  buttonDiv.innerHTML = myHtml;
+
+  // Add event listeners for hover effects
+  document.querySelectorAll(".category-wrapper").forEach((wrapper) => {
+    wrapper.addEventListener("mouseover", () => showSubCategories(wrapper));
+    wrapper.addEventListener("mouseout", () => hideSubCategories(wrapper));
+  });
+}
+
+// Show subcategories on hover
+function showSubCategories(wrapper) {
+  let subCategoriesDiv = wrapper.querySelector(".subcategories");
+  if (subCategoriesDiv) {
+    subCategoriesDiv.style.display = "block";
   }
 }
 
-// Handle category button click
-function categoryButtonCallBack(index) {
-  let url = categories[index].url; // Get category URL
-  displayProducts(url); // Show products
+// Hide subcategories when not hovering
+function hideSubCategories(wrapper) {
+  let subCategoriesDiv = wrapper.querySelector(".subcategories");
+  if (subCategoriesDiv) {
+    subCategoriesDiv.style.display = "none";
+  }
+}
+
+// Handle subcategory click
+function handleSubcategoryClick(subCategory) {
+  displayProducts([subCategory]);
 }
 
 // Display products from category
-// Fetch and display products based on category URL
-function displayProducts(url) {
-  fetch(url)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Error: " + response.status);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      productsContainer.classList.add("products");
-      productsDiv.innerHTML = ""; // Clear previous products
-      let myHtml = "";
+function displayProducts(subCategories) {
+  productsDiv.innerHTML = ""; // Clear previous products
+  productsContainer.innerHTML = ""; // Clear previous products container
+  productsContainer.classList.add("products");
 
-      // Loop through each product
-      data.products.forEach((categoriesProducts) => {
-        // Generate HTML for each product
-        myHtml += `
-          <figure>
-            <img src="${categoriesProducts.thumbnail}" alt="${
-          categoriesProducts.title
-        }">
-            <figcaption>
-              <h3>${categoriesProducts.title}</h3>
-              <p>${categoriesProducts.price} $</p>
-              <div class="rating">${createStars(
-                categoriesProducts.rating
-              )}</div>
-            </figcaption>
-          </figure>
-        `;
-      });
+  subCategories.forEach((subCategory) => {
+    let url = `https://dummyjson.com/products/category/${subCategory}`;
+    fetch(url)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error: " + response.status);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        let myHtml = "";
 
-      // Insert products into the container
-      productsDiv.innerHTML = myHtml;
-      productsContainer.appendChild(productsDiv);
-      myApp.appendChild(productsContainer);
-    })
-    .catch((error) => console.error(error)); // Handle errors
+        // Loop through each product
+        data.products.forEach((categoriesProducts) => {
+          // Generate HTML for each product
+          myHtml += `
+            <figure>
+              <img src="${categoriesProducts.thumbnail}" alt="${
+            categoriesProducts.title
+          }">
+              <figcaption>
+                <h3>${categoriesProducts.title}</h3>
+                <p>${categoriesProducts.price} $</p>
+                <div class="rating">${createStars(
+                  categoriesProducts.rating
+                )}</div>
+              </figcaption>
+            </figure>
+          `;
+        });
+
+        // Insert products into the container
+        productsDiv.innerHTML = myHtml;
+        productsContainer.appendChild(productsDiv);
+        myApp.appendChild(productsContainer);
+      })
+      .catch((error) => console.error(error)); // Handle errors
+  });
 }
 
 // Create stars based on product rating

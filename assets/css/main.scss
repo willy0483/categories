@@ -99,3 +99,50 @@ button {
   justify-content: flex-start;
   margin-top: 5px;
 }
+
+// Style the category buttons
+button {
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  background-color: transparent;
+  position: relative; // Important for positioning the subcategory dropdown
+}
+
+// Container for category buttons and subcategories
+// Container for category buttons and subcategories
+.category-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+// Subcategory dropdown
+.subcategories {
+  display: none;
+  position: absolute;
+  top: 100%; // Position below the button
+  left: 0;
+  background-color: #fff;
+  border: 1px solid $product-border;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px $product-shadow;
+  padding: 10px;
+  z-index: 10;
+
+  .subcategory {
+    padding: 5px 10px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  }
+}
+
+// Show subcategories when hovering over the category wrapper
+.category-wrapper:hover .subcategories {
+  display: block;
+}
