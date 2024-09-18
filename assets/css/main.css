@@ -119,4 +119,60 @@ button {
 
 .category-wrapper:hover .subcategories {
   display: block;
+}
+
+.footerMain {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10rem 0;
+  background-color: var(--footer-bg);
+  max-width: var(--width-full);
+  height: 200px;
+  position: relative;
+  margin-top: 10rem;
+}
+
+.lists {
+  display: flex;
+  flex-wrap: wrap;
+}
+.lists ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  list-style: none;
+  color: var(--black);
+  padding: 2rem;
+}
+.lists ul li,
+.lists ul p {
+  margin-bottom: var(--padding-sm);
+  font-size: var(--font-size-md);
+  font-weight: 400;
+}
+.lists ul li a {
+  text-decoration: none;
+  color: var(--black);
+}
+.lists ul h3 {
+  margin-bottom: var(--padding-md);
+  color: var(--light);
+  font-size: var(--font-size-xl);
+}
+
+.ratings {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.ratings ul {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.ratings ul img {
+  width: var(--rating-img-width);
+  height: auto;
 }/*# sourceMappingURL=main.css.map */

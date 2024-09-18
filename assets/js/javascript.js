@@ -220,3 +220,51 @@ function createStars(rating) {
   }
   return stars;
 }
+
+// Function to create and add the footer
+function buildFooter() {
+  // Create the footer element
+  let footer = document.createElement("footer");
+  footer.className = "footerMain";
+
+  // Set the innerHTML of the footer
+  footer.innerHTML = `
+    <div class="lists">
+      <ul>
+        <h3>Company</h3>
+        <p>Infenite Finds Emv</p>
+        <p>CVR-NB-44215799</p>
+      </ul>
+      <ul>
+        <h3>Address</h3>
+        <p>Bakkegårdsvej 28 C,2</p>
+        <p>9000 Aalborg</p>
+      </ul>
+      <ul>
+        <h3>Policy</h3>
+        <li><a href="#">Terms and Conditions</a></li>
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Withdrawal</a></li>
+        <li><a href="#">Cookie's</a></li>
+      </ul>
+      <ul>
+        <h3>Contact Info</h3>
+        <p>Phone: +45 42506072</p>
+        <p>E-mail: Infinite@finds.dk</p>
+      </ul>
+    <div class="ratings">
+      <ul>
+        <li><img src="assets/Images/Loading/Link [is-br-12--is-m-br-10--slide-in].svg" alt=""></li>
+        <li><img src="assets/Images/Loading/Link [footer__ben-item_one].svg" alt=""></li>
+        <li><img src="assets/Images/Loading/Link [footer__ben-item].svg" alt=""></li>
+      </ul>
+          </div>
+    </div>
+  `;
+
+  // Append the footer to the body
+  document.body.appendChild(footer);
+}
+
+// Call the function to build and add the footer to the document
+buildFooter();
