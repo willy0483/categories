@@ -93,6 +93,18 @@ button {
   }
 }
 
+// error
+
+.error-container {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+
 // Ensure the star ratings align well
 .rating {
   display: flex;

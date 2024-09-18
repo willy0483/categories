@@ -19,14 +19,36 @@ function getData() {
   fetch("https://dummyjson.com/products/category-list")
     .then((response) => {
       if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+      console.log(response);
+
       return response.json();
     })
     .then((data) => {
-      console.log("Fetched data:", data); // Log fetched data
-      categories = data;
-      sortCategories(data); // Sort categories
+      if (Array.isArray(data)) {
+        console.log("Fetched data:", data); // Log fetched data
+        categories = data;
+        sortCategories(data); // Sort categories
+      }
     })
-    .catch((error) => console.error(error));
+    .catch((error) => {
+      console.error(error);
+      buildError(error);
+    });
+}
+
+function buildError(error) {
+  myApp.innerHTML = "";
+
+  myHtml = `
+
+  <div class="error-container">
+    <h1>Error loading data</h1>
+    <p>Please try again.</p>
+    <p>${error}</p>
+  </div>
+ `;
+
+  myApp.innerHTML = myHtml;
 }
 
 // Sort categories into main and subcategories
@@ -147,34 +169,41 @@ function displayProducts(subCategories) {
       })
       .then((data) => {
         let myHtml = "";
-
         // Loop through each product
-        data.products.forEach((categoriesProducts) => {
-          // Generate HTML for each product
-          myHtml += `
-            <figure>
-              <img src="${categoriesProducts.thumbnail}" alt="${
-            categoriesProducts.title
-          }">
-              <figcaption>
-                <h3>${categoriesProducts.title}</h3>
-                <p>${categoriesProducts.price} $</p>
-                <div class="rating">${createStars(
-                  categoriesProducts.rating
-                )}</div>
-              </figcaption>
-            </figure>
-          `;
-        });
 
-        // Insert products into the container
-        productsDiv.innerHTML = myHtml;
-        productsContainer.appendChild(productsDiv);
-        myApp.appendChild(productsContainer);
+        if (Array.isArray(data.products)) {
+          data.products.forEach((categoriesProducts) => {
+            // Generate HTML for each product
+            myHtml += `
+              <figure>
+                <img src="${categoriesProducts.thumbnail}" alt="${
+              categoriesProducts.title
+            }">
+                <figcaption>
+                  <h3>${categoriesProducts.title}</h3>
+                  <p>${categoriesProducts.price} $</p>
+                  <div class="rating">${createStars(
+                    categoriesProducts.rating
+                  )}</div>
+                </figcaption>
+              </figure>
+            `;
+          });
+
+          // Insert products into the container
+          productsDiv.innerHTML = myHtml;
+          productsContainer.appendChild(productsDiv);
+          myApp.appendChild(productsContainer);
+        }
       })
-      .catch((error) => console.error(error)); // Handle errors
+      .catch((error) => {
+        console.error(error);
+        buildError(error);
+      });
   });
 }
+
+// buildError(error)
 
 // Create stars based on product rating
 function createStars(rating) {
