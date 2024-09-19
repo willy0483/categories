@@ -36,6 +36,72 @@ button {
   cursor: pointer;
   background-color: transparent;
 }
+button {
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.headerNav {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1rem;
+
+  .category {
+  }
+
+  .logo {
+    grid-column: 2;
+    display: flex;
+    justify-content: flex-end; /* Align logo to the right */
+
+    img {
+      width: 120px;
+      height: auto;
+      padding: 1rem;
+    }
+  }
+
+  .search {
+    display: flex;
+    align-items: center;
+    background-color: #f9f9f9;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    padding: 8px;
+    width: 400px;
+    max-width: 100%;
+    margin-left: auto;
+
+    img {
+      width: 20px;
+      height: auto;
+      margin-right: 8px;
+    }
+
+    input {
+      border: none;
+      outline: none;
+      flex: 1;
+      padding: 4px;
+      font-size: 16px;
+
+      &::placeholder {
+        color: #aaa;
+        opacity: 1;
+      }
+    }
+
+    &:hover {
+      border-color: #888;
+    }
+  }
+}
 
 // Flexbox for the button container
 #app > div {
@@ -121,10 +187,9 @@ button {
   font-size: 1rem;
   cursor: pointer;
   background-color: transparent;
-  position: relative; // Important for positioning the subcategory dropdown
+  position: relative;
 }
 
-// Container for category buttons and subcategories
 // Container for category buttons and subcategories
 .category-wrapper {
   position: relative;
@@ -176,12 +241,12 @@ button {
 
 .lists {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
 
   ul {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     list-style: none;
     color: var(--black);
     padding: 2rem;
@@ -224,3 +289,9 @@ button {
   }
 }
 // #endregion
+
+@media (max-width: 1000px) {
+  .footerMain {
+    margin-top: 30rem;
+  }
+}
